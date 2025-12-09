@@ -31,7 +31,7 @@ The package uses Laravel's package auto-discovery.
 Optionally publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="ShahKochaki\\Vault\\VaultServiceProvider" --tag=config
+php artisan vendor:publish --provider="Shahkochaki\\Vault\\VaultServiceProvider" --tag=config
 ```
 
 This creates `config/vault.php` in your application.
@@ -63,7 +63,7 @@ VAULT_SECRET=database
 
 ## Usage
 
-The package registers a singleton `ShahKochaki\\Vault\\VaultService` that you can inject, resolve from the container, or use in any Laravel context.
+The package registers a singleton `Shahkochaki\\Vault\\VaultService` that you can inject, resolve from the container, or use in any Laravel context.
 
 ### Simple example — read a secret
 
@@ -72,7 +72,7 @@ The package registers a singleton `ShahKochaki\\Vault\\VaultService` that you ca
 
 namespace App\\Http\\Controllers;
 
-use ShahKochaki\\Vault\\VaultService;
+use Shahkochaki\\Vault\\VaultService;
 
 class ExampleController extends Controller
 {
@@ -96,7 +96,7 @@ class ExampleController extends Controller
 ### Constructor dependency injection
 
 ```php
-use ShahKochaki\\Vault\\VaultService;
+use Shahkochaki\\Vault\\VaultService;
 
 class PaymentService
 {
@@ -121,7 +121,7 @@ class PaymentService
 ### Resolve from container
 
 ```php
-$vault = app(ShahKochaki\\Vault\\VaultService::class);
+$vault = app(Shahkochaki\\Vault\\VaultService::class);
 $secret = $vault->getSecret('my/secret/path');
 ```
 
@@ -202,7 +202,7 @@ The service provider will attempt to fetch this secret at boot and patch `config
 Store credentials under a path like `app/services/stripe` and fetch them at runtime:
 
 ```php
-$stripe = app(\ShahKochaki\\Vault\\VaultService::class)->getSecret('app/services/stripe');
+$stripe = app(\Shahkochaki\\Vault\\VaultService::class)->getSecret('app/services/stripe');
 \Stripe\Stripe::setApiKey($stripe['STRIPE_SECRET']);
 ```
 
@@ -303,7 +303,7 @@ vault kv put secret/app/test DB_PASSWORD=test123 DB_USER=testuser
 Then in Laravel Tinker:
 
 ```php
->>> $vault = app(\ShahKochaki\\Vault\\VaultService::class);
+>>> $vault = app(\Shahkochaki\\Vault\\VaultService::class);
 >>> $secret = $vault->getSecret('app/test');
 >>> dd($secret);
 ```
