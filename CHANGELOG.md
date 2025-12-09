@@ -17,7 +17,6 @@ All notable changes to this project will be documented in this file.
 
 - This release is a documentation and small feature bump (port support).
 
-
 ## [1.1.1] - 2025-12-09
 
 ### Added
