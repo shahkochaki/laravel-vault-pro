@@ -15,6 +15,7 @@
         "vault",
         "hashicorp",
         "secrets",
+        "keystore",
         "kv2"
     ],
     "support": {

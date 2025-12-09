@@ -1,6 +1,6 @@
 # shahkochaki / Laravel Vault
 
-Lightweight Laravel integration for HashiCorp Vault (KV v2-aware).
+Laravel Vault provides a lightweight, production-minded integration between Laravel and HashiCorp Vault. It supports KV v2, token-file authentication (Vault Agent / mounted tokens), configurable caching, and safe runtime config injection so you can fetch secrets at boot or on demand without committing secrets to source control.
 
 Installation (local development via path repository):
 
