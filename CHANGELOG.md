@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2025-12-09
+
+### Added
+
+- **Auto-sync with .env file**: Package now automatically reads `.env` file and syncs empty variables from Vault
+- **Flexible sync control**: New config options `update_env` and `update_config` to control what gets updated
+- **Custom config mappings**: Define custom mappings between env variables and Laravel config paths via `config_mappings`
+- Built-in config mappings for common Laravel services (Database, Redis, Mail, AWS, Cache, Queue, Session)
+- New `getEnvKeys()` method to read and parse `.env` file keys
+
+### Changed
+
+- Secret application logic now only processes keys that exist in `.env` file
+- Config mappings now support custom user-defined mappings with priority over defaults
+- Improved documentation with comprehensive examples of new features
+
+### Notes
+
+- This is a major feature release that changes how secrets are applied
+- Backward compatible with existing configurations
+- Recommended to review and test sync behavior before deploying to production
+
 ## [1.1.3] - 2025-12-09
 
 ### Fixed

@@ -9,4 +9,14 @@ return [
     'path' => env('VAULT_PATH', ''),
     'timeout' => 5,
     'cache_ttl' => 300,
+
+    // Auto-update settings
+    'update_env' => env('VAULT_UPDATE_ENV', true),
+    'update_config' => env('VAULT_UPDATE_CONFIG', true),
+
+    // Custom config mappings (ENV_KEY => config.path)
+    // Example: 'MY_API_KEY' => 'services.myapi.key'
+    'config_mappings' => [
+        // Add your custom mappings here
+    ],
 ];

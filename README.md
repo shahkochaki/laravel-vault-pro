@@ -7,10 +7,13 @@ Laravel Vault is a lightweight, production-minded integration between Laravel an
 
 Key features
 
+- **Auto-sync with .env file**: Automatically reads your `.env` file and syncs empty variables from Vault
+- **Flexible configuration**: Control whether to update environment variables, Laravel configs, or both
+- **Custom config mappings**: Define your own mappings between env variables and config paths
 - Full KV v2 support (automatically constructs v2 API paths)
 - Token-file support for Vault Agent and container environments
 - Configurable caching using Laravel's cache repository
-- Safe runtime config injection for common keys (DB credentials)
+- Safe runtime config injection for common keys (DB credentials, mail, AWS, etc.)
 - Graceful error handling and logging
 - Compatible with Laravel 9, 10, 11, 12
 
@@ -150,13 +153,21 @@ $fresh = $vault->getSecret('app/production/database');
 return [
     'addr' => env('VAULT_ADDR', 'http://127.0.0.1'),
     'token' => env('VAULT_TOKEN', ''),
-  'token_file' => env('VAULT_TOKEN_FILE', ''),
-  'port' => env('VAULT_PORT', 8200),
+    'token_file' => env('VAULT_TOKEN_FILE', ''),
+    'port' => env('VAULT_PORT', 8200),
     'engine' => env('VAULT_ENGINE', 'secret'),
     'path' => env('VAULT_PATH', ''),
     'timeout' => 5,
-    'cache_ttl' => 30,
-    'test' => env('VAULT_TEST', 'vault_config_test_value'),
+    'cache_ttl' => 300,
+    
+    // Auto-update settings
+    'update_env' => env('VAULT_UPDATE_ENV', true),
+    'update_config' => env('VAULT_UPDATE_CONFIG', true),
+    
+    // Custom config mappings (ENV_KEY => config.path)
+    'config_mappings' => [
+        // Example: 'MY_API_KEY' => 'services.myapi.key',
+    ],
 ];
 ```
 
@@ -179,6 +190,93 @@ VAULT_TOKEN_FILE=/var/run/secrets/vault-token
 VAULT_ENGINE=secret
 VAULT_PATH=app/production
 ```
+
+---
+
+## Auto-sync with .env file (New in v1.2.0)
+
+The package now automatically reads your `.env` file and syncs any empty environment variables from Vault. This eliminates the need to manually specify which keys to fetch.
+
+### How it works
+
+1. Package reads all keys from your `.env` file
+2. For each key that is empty or not set, it checks if that key exists in Vault
+3. If found in Vault, it updates the environment variable and/or Laravel config based on settings
+
+### Example
+
+Your `.env` file:
+```env
+APP_NAME=MyApp
+DB_HOST=
+DB_PASSWORD=
+MAIL_PASSWORD=
+MY_API_KEY=
+```
+
+Your Vault secret at `app/production/database`:
+```json
+{
+  "DB_HOST": "mysql.server.com",
+  "DB_PASSWORD": "secret123",
+  "MAIL_PASSWORD": "mailpass",
+  "MY_API_KEY": "key_xxxxx",
+  "RANDOM_KEY": "will_be_ignored"
+}
+```
+
+The package will:
+- ✅ Sync `DB_HOST`, `DB_PASSWORD`, `MAIL_PASSWORD`, `MY_API_KEY` (exist in .env)
+- ❌ Ignore `RANDOM_KEY` (not in .env)
+- ❌ Ignore `APP_NAME` (already has a value)
+
+### Control sync behavior
+
+```env
+# Update environment variables (default: true)
+VAULT_UPDATE_ENV=true
+
+# Update Laravel configs (default: true)
+VAULT_UPDATE_CONFIG=true
+```
+
+**Disable env updates, only update configs:**
+```env
+VAULT_UPDATE_ENV=false
+VAULT_UPDATE_CONFIG=true
+```
+
+**Disable both (read-only mode):**
+```env
+VAULT_UPDATE_ENV=false
+VAULT_UPDATE_CONFIG=false
+```
+
+### Custom config mappings
+
+Define your own mappings in `config/vault.php`:
+
+```php
+'config_mappings' => [
+    'MY_API_KEY' => 'services.myapi.key',
+    'STRIPE_SECRET' => 'services.stripe.secret',
+    'CUSTOM_VALUE' => 'app.custom.value',
+],
+```
+
+Now when `MY_API_KEY` is synced from Vault, it will automatically update `config('services.myapi.key')`.
+
+### Built-in config mappings
+
+The package includes default mappings for common Laravel services:
+
+- **Database**: `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
+- **Redis**: `REDIS_HOST`, `REDIS_PORT`, `REDIS_PASSWORD`
+- **Mail**: `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_ENCRYPTION`
+- **AWS**: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`, `AWS_BUCKET`
+- **Cache**: `CACHE_DRIVER`
+- **Queue**: `QUEUE_CONNECTION`
+- **Session**: `SESSION_DRIVER`
 
 ---
 
@@ -329,7 +427,7 @@ Then in Laravel Tinker:
 
 ## Changelog
 
-See `CHANGELOG.md` for release notes. Current: **1.1.2**
+See `CHANGELOG.md` for release notes. Current: **1.2.0**
 
 ---
 
