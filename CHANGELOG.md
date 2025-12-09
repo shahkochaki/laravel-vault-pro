@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2025-12-09
+
+### Fixed
+
+- **Corrected sync logic flow**: Now correctly reads empty keys from `.env` first, then checks Vault (instead of iterating Vault keys first)
+- Improved logging to show which empty keys were found and which were applied from Vault
+- Better handling of empty value detection in `.env` file (strips quotes properly)
+
+### Changed
+
+- Renamed `getEnvKeys()` to `getEmptyEnvKeys()` to better reflect its purpose
+- Enhanced debug logging throughout the sync process
+
 ## [1.2.0] - 2025-12-09
 
 ### Added
