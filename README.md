@@ -1,4 +1,5 @@
 echo $VAULT_ADDR
+
 # Laravel Vault
 
 [![Latest Version](https://img.shields.io/packagist/v/shahkochaki/laravel-vault.svg)](https://packagist.org/packages/shahkochaki/laravel-vault)
@@ -339,4 +340,3 @@ MIT — see `LICENSE` for details.
 Made with ❤️ for the Laravel and HashiCorp Vault communities.
 
 Author: shahkochaki (https://github.com/shahkochaki)
-
