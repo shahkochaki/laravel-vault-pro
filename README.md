@@ -96,6 +96,92 @@ VAULT_PATH=app/production
 VAULT_SECRET=database
 ```
 
+### 🐳 Docker / Kubernetes Setup
+
+**If you're using Docker, Docker Compose, or Kubernetes**, you should use **VAULT mode** instead of the default DOTENV mode. This is because container environments typically don't have a `.env` file and instead use environment variables directly.
+
+#### Docker Compose Example
+
+```yaml
+version: '3.8'
+
+services:
+  app:
+    image: your-laravel-app
+    environment:
+      # Vault Configuration
+      - VAULT_ADDR=http://vault:8200
+      - VAULT_TOKEN=${VAULT_TOKEN}
+      - VAULT_ENGINE=secret
+      - VAULT_PATH=app/production
+      - VAULT_SECRET=database
+      
+      # Important: Use VAULT sync mode for Docker
+      - VAULT_SYNC_MODE=vault
+      
+      # Optional: Control what gets updated
+      - VAULT_UPDATE_ENV=true
+      - VAULT_UPDATE_CONFIG=true
+    depends_on:
+      - vault
+      
+  vault:
+    image: vault:latest
+    ports:
+      - "8200:8200"
+```
+
+#### Kubernetes Example
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: laravel-config
+data:
+  VAULT_ADDR: "http://vault.vault.svc.cluster.local:8200"
+  VAULT_ENGINE: "secret"
+  VAULT_PATH: "app/production"
+  VAULT_SECRET: "database"
+  VAULT_SYNC_MODE: "vault"  # Important for Kubernetes!
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        image: your-laravel-app:latest
+        envFrom:
+        - configMapRef:
+            name: laravel-config
+        env:
+        - name: VAULT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: vault-token
+              key: token
+```
+
+#### Why use `VAULT_SYNC_MODE=vault` for Docker?
+
+- ✅ No `.env` file needed in the container
+- ✅ Environment variables come from Docker/Kubernetes
+- ✅ Vault fills in only the missing/empty variables
+- ✅ Perfect for microservices and orchestrated deployments
+- ✅ Works seamlessly with CI/CD pipelines
+
+**How it works:**
+1. Your orchestrator (Docker/K8s) sets base environment variables
+2. Laravel Vault reads all secrets from Vault
+3. For each secret, it checks if `env()` is empty
+4. Only empty/missing variables are filled from Vault
+5. Your existing environment variables are preserved
+
 ---
 
 ## Usage
