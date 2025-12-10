@@ -112,7 +112,6 @@ class VaultServiceProvider extends ServiceProvider
             if ($syncMode === 'vault') {
                 // VAULT MODE: Read Vault first, apply only if env() is empty
                 // Perfect for Docker/container environments where .env doesn't exist
-                Log::debug('VaultServiceProvider: Using VAULT sync mode (for Docker/containers)');
 
                 foreach ($secretUpper as $key => $value) {
                     // Check if env variable is empty or not set
@@ -132,7 +131,6 @@ class VaultServiceProvider extends ServiceProvider
                         }
 
                         $appliedCount++;
-                        Log::debug("VaultServiceProvider: Applied {$key} from Vault (was empty in environment)");
                     } else {
                         Log::debug("VaultServiceProvider: Skipped {$key} (already set in environment)");
                     }
@@ -140,10 +138,6 @@ class VaultServiceProvider extends ServiceProvider
 
                 Log::info("VaultServiceProvider: Applied {$appliedCount} secrets from Vault (vault mode)");
             } else {
-                // DOTENV MODE: Read .env file first, find empty keys, then sync from Vault
-                // Traditional mode for environments with .env file
-                Log::debug('VaultServiceProvider: Using DOTENV sync mode (traditional .env based)');
-
                 // Step 1: Read .env file and find empty keys
                 $emptyEnvKeys = $this->getEmptyEnvKeys();
 
@@ -152,7 +146,6 @@ class VaultServiceProvider extends ServiceProvider
                     return;
                 }
 
-                Log::debug('VaultServiceProvider: Found ' . count($emptyEnvKeys) . ' empty env keys: ' . implode(', ', $emptyEnvKeys));
 
                 // Step 2: For each empty env key, check if it exists in Vault
                 foreach ($emptyEnvKeys as $key) {
@@ -172,15 +165,11 @@ class VaultServiceProvider extends ServiceProvider
                         }
 
                         $appliedCount++;
-                        Log::debug("VaultServiceProvider: Applied {$key} from Vault (was empty in .env)");
                     } else {
                         Log::debug("VaultServiceProvider: {$key} is empty in .env but not found in Vault");
                     }
                 }
-
-                Log::info("VaultServiceProvider: Applied {$appliedCount} secrets from Vault (env mode)");
             }
-
             self::$bootApplied = true;
         } catch (\Throwable $e) {
             Log::warning('VaultServiceProvider bootstrap vault fetch failed: ' . $e->getMessage());
