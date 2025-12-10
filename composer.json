@@ -9,7 +9,7 @@
             "email": "ali.shahkochaki7@gmail.com"
         }
     ],
-    "homepage": "https://github.com/shahkochaki/laravel-vault",
+    "homepage": "https://github.com/shahkochaki/laravel-vault-pro",
     "keywords": [
         "laravel",
         "vault",
@@ -28,8 +28,8 @@
         "kubernetes"
     ],
     "support": {
-        "issues": "https://github.com/shahkochaki/laravel-vault/issues",
-        "source": "https://github.com/shahkochaki/laravel-vault"
+        "issues": "https://github.com/shahkochaki/laravel-vault-pro/issues",
+        "source": "https://github.com/shahkochaki/laravel-vault-pro"
     },
     "version": "1.2.2",
     "require": {

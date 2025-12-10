@@ -20,6 +20,7 @@ Stop managing secrets manually. Let Laravel Vault handle it automatically:
 ## 🎯 Key Features
 
 ### Core Features
+
 - **🔄 Automatic .env Sync**: Reads your `.env`, finds empty keys, and fills them from Vault
 - **⚙️ Flexible Control**: Choose to update environment variables, Laravel configs, or both
 - **🎨 Custom Mappings**: Define your own mappings between env variables and config paths
@@ -31,7 +32,9 @@ Stop managing secrets manually. Let Laravel Vault handle it automatically:
 - **🔧 Laravel 9-12 Compatible**: Works with all modern Laravel versions
 
 ### Built-in Config Mappings
+
 Out-of-the-box support for:
+
 - 💾 **Database**: MySQL, PostgreSQL, SQL Server
 - 🔴 **Redis**: Connection credentials and settings
 - 📧 **Mail**: SMTP, Mailgun, SES configurations
@@ -471,7 +474,7 @@ See `CHANGELOG.md` for release notes. Current: **1.2.2**
 
 ## Contributing & Support
 
-- Report bugs and request features on GitHub Issues: https://github.com/shahkochaki/laravel-vault/issues
+- Report bugs and request features on GitHub Issues: https://github.com/shahkochaki/laravel-vault-pro/issues
 - PRs welcome; please follow repository contribution guidelines.
 
 ---
