@@ -1,21 +1,44 @@
-# Laravel Vault
+# 🔐 Laravel Vault - Complete HashiCorp Vault Integration
 
 [![Latest Version](https://img.shields.io/packagist/v/shahkochaki/laravel-vault.svg)](https://packagist.org/packages/shahkochaki/laravel-vault)
+[![Total Downloads](https://img.shields.io/packagist/dt/shahkochaki/laravel-vault.svg)](https://packagist.org/packages/shahkochaki/laravel-vault)
 [![License](https://img.shields.io/packagist/l/shahkochaki/laravel-vault.svg)](https://packagist.org/packages/shahkochaki/laravel-vault)
 
-Laravel Vault is a lightweight, production-minded integration between Laravel and HashiCorp Vault. It focuses on making it easy to fetch KV v2 secrets, cache them, and safely inject runtime configuration (for example, database credentials) without committing secrets to source control.
+**The most powerful and developer-friendly HashiCorp Vault integration for Laravel.** Automatically sync secrets, manage credentials securely, and deploy with confidence - all without committing sensitive data to your repository.
 
-Key features
+## ✨ Why Laravel Vault?
 
-- **Auto-sync with .env file**: Automatically reads your `.env` file and syncs empty variables from Vault
-- **Flexible configuration**: Control whether to update environment variables, Laravel configs, or both
-- **Custom config mappings**: Define your own mappings between env variables and config paths
-- Full KV v2 support (automatically constructs v2 API paths)
-- Token-file support for Vault Agent and container environments
-- Configurable caching using Laravel's cache repository
-- Safe runtime config injection for common keys (DB credentials, mail, AWS, etc.)
-- Graceful error handling and logging
-- Compatible with Laravel 9, 10, 11, 12
+Stop managing secrets manually. Let Laravel Vault handle it automatically:
+
+- 🔄 **Auto-sync secrets** from Vault directly to your `.env` file
+- 🎯 **Zero-config setup** - works out of the box with sensible defaults
+- 🚀 **Production-ready** - built for Kubernetes, Docker, and cloud deployments
+- 🔒 **Secure by default** - never commit credentials again
+- ⚡ **Smart caching** - fast performance without compromising security
+- 🛠️ **Flexible configuration** - adapt to any workflow
+
+## 🎯 Key Features
+
+### Core Features
+- **🔄 Automatic .env Sync**: Reads your `.env`, finds empty keys, and fills them from Vault
+- **⚙️ Flexible Control**: Choose to update environment variables, Laravel configs, or both
+- **🎨 Custom Mappings**: Define your own mappings between env variables and config paths
+- **📦 Full KV v2 Support**: Automatically constructs proper v2 API paths
+- **🔑 Vault Agent Ready**: Token-file support for container and Kubernetes environments
+- **⚡ Smart Caching**: Configurable caching using Laravel's cache system
+- **🎯 Auto Config Injection**: Built-in support for Database, Redis, Mail, AWS, and more
+- **🛡️ Error Resilient**: Graceful error handling with detailed logging
+- **🔧 Laravel 9-12 Compatible**: Works with all modern Laravel versions
+
+### Built-in Config Mappings
+Out-of-the-box support for:
+- 💾 **Database**: MySQL, PostgreSQL, SQL Server
+- 🔴 **Redis**: Connection credentials and settings
+- 📧 **Mail**: SMTP, Mailgun, SES configurations
+- ☁️ **AWS**: S3, SQS, SNS credentials
+- 🔄 **Queue**: Redis, SQS, Beanstalkd
+- 💿 **Cache**: Redis, Memcached
+- 🔐 **Session**: Database, Redis storage
 
 ---
 

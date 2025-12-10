@@ -1,6 +1,6 @@
 {
     "name": "shahkochaki/laravel-vault",
-    "description": "Laravel Vault provides a lightweight, production-minded integration between Laravel and HashiCorp Vault. It supports KV v2, token-file authentication (Vault Agent / mounted tokens), configurable caching, and safe runtime config injection so you can fetch secrets at boot or on demand without committing secrets to source control.",
+    "description": "🔐 Complete HashiCorp Vault integration for Laravel - Auto-sync secrets from Vault to your .env, seamless KV v2 support, production-ready caching, Vault Agent authentication, and zero-config secret management. Keep your credentials safe and your deployments simple.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -14,9 +14,18 @@
         "laravel",
         "vault",
         "hashicorp",
-        "secrets",
-        "keystore",
-        "kv2"
+        "secrets-management",
+        "security",
+        "credentials",
+        "environment",
+        "config",
+        "kv2",
+        "vault-agent",
+        "secret-store",
+        "dotenv",
+        "laravel-package",
+        "devops",
+        "kubernetes"
     ],
     "support": {
         "issues": "https://github.com/shahkochaki/laravel-vault/issues",
