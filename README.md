@@ -58,7 +58,7 @@ The package uses Laravel's package auto-discovery.
 Optionally publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="Shahkochaki\\Vault\\VaultServiceProvider" --tag=config
+php artisan vendor:publish --provider="Shahkochaki\Vault\VaultServiceProvider" --tag=config
 ```
 
 This creates `config/vault.php` in your application.
