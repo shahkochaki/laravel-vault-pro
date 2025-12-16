@@ -135,8 +135,6 @@ class VaultServiceProvider extends ServiceProvider
                         Log::debug("VaultServiceProvider: Skipped {$key} (already set in environment)");
                     }
                 }
-
-                Log::info("VaultServiceProvider: Applied {$appliedCount} secrets from Vault (vault mode)");
             } else {
                 // Step 1: Read .env file and find empty keys
                 $emptyEnvKeys = $this->getEmptyEnvKeys();
